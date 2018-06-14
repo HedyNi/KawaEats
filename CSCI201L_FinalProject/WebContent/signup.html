@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign up</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px;}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    #left{
+     /* background-color: red; */
+     float: left;
+     width: 50%;
+     height: 350px;
+     
+    }
+    #right{
+     /* background-color: blue; */
+     float: left;
+     width: 50%;
+     height: 350px;
+     
+    }
+    #bottom{
+     /* background-color: yellow; */
+    }
+  </style>
+  <script language="JavaScript">
+  /* document.addEventListener("DOMContentLoaded", function() {
+   //if we need to pull data from local json file
+   $.ajax({
+    url: "userDataFile.json",
+    dataType: "json",
+    type: "get",
+    success: function(userDataFile) {
+     var users = JSON.stringify(userDataFile);
+     localStorage.setItem("userString", users);
+     console.log(users);
+    }
+   });
+  }) */
+  
+  function CheckUsername() {   
+   //pull user data string from local storage into an object
+   var userObject = JSON.parse(localStorage.userData);
+   
+   //check if username has been occupied
+   var taken = false;
+   for(var i=0;i<userObject.users.length; i++) {
+    if(userObject.users[i].username == document.signUpForm.username.value) {
+     document.getElementById("correctUsername").innerHTML = "";
+     document.getElementById("usernameError").innerHTML =
+      "<i class='fa fa-window-close' style='color:red'><strong>Username taken</strong></i>"; 
+     taken = true;
+    }
+   }
+   if(taken == false) {
+    document.getElementById("usernameError").innerHTML = "<br />";
+    document.getElementById("correctUsername").innerHTML =
+     "<i class='fa fa-check-circle' style='color:green'></i>";
+   }
+  }//end of CheckUsername()
+  
+  function CheckPassword() {
+   if(document.signUpForm.password.value.length < 8) {
+    document.getElementById("correctPassword").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = 
+     "<i class='fa fa-window-close' style='color:red'><strong>Password must be at least 8 characters long.</strong></i>";
+   }
+   else {
+    document.getElementById("passwordError").innerHTML = "<br />";
+    document.getElementById("correctPassword").innerHTML = 
+     "<i class='fa fa-check-circle' style='color:green'></i>";
+   }
+  }//end of CheckPassword()
+  
+  function CheckReEnter() {
+   if(document.signUpForm.password.value != document.signUpForm.reEnterPassword.value) {
+    document.getElementById("correctReEnter").innerHTML = "";
+    document.getElementById("reEnterPasswordError").innerHTML =
+     "<i class='fa fa-window-close' style='color:red'><strong>Password does not match.</strong></i>";
+   }
+   else {
+    document.getElementById("reEnterPasswordError").innerHTML =
+     "<br />";
+    document.getElementById("correctReEnter").innerHTML =
+     "<i class='fa fa-check-circle' style='color:green'></i>";
+   }
+  }//end of CheckReEnter()
+  
+  function Validate() {
+   var returnValue = true;
+   if(document.signUpForm.username.value.length == 0) {
+    document.getElementById("usernameError").innerHTML = 
+     "<i class='fa fa-window-close' style='color:red'><strong>Username cannot be blank</strong></i>";
+    document.getElementById("correctUsername").innerHTML = "<br />";
+    returnValue = false;
+   }
+   if(document.signUpForm.email.value.length == 0) {
+    document.getElementById("emailError").innerHTML = 
+     "<i class='fa fa-window-close' style='color:red'><strong>Email cannot be blank</strong></i>";
+    returnValue = false;
+   }
+   if(document.signUpForm.telephone.value.length == 0) {
+    document.getElementById("telError").innerHTML = 
+     "<i class='fa fa-window-close' style='color:red'><strong>Cellphone number cannot be blank</strong></i>";
+    returnValue = false;
+   }
+   
+   if(returnValue) {
+    if(document.signUpForm.imageURL.value.length == 0) {
+     document.signUpForm.imageURL.value =
+      "http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg";
+    }
+    if(document.signUpForm.bday.value.length == 0) {
+     document.signUpForm.bday.value = "1000-01-01";
+    }
+    var cuisineList = [];
+    if(document.getElementById("am").checked) cuisineList.push("american");
+    if(document.getElementById("as").checked) cuisineList.push("asian");
+    if(document.getElementById("fr").checked) cuisineList.push("french");
+    if(document.getElementById("gr").checked) cuisineList.push("greek");
+    if(document.getElementById("me").checked) cuisineList.push("mexican");
+    
+    var newUser = {
+      username: document.signUpForm.username.value,
+      password: document.signUpForm.password.value,
+      imageURL: document.signUpForm.imageURL.value,
+      email: document.signUpForm.email.value,
+      phone: document.signUpForm.telephone.value,
+      date: document.signUpForm.bday.value,
+      interested: cuisineList,
+      friends: [""],
+      parties: [""],
+      messages: [""]
+    };
+    console.log(newUser);
+    var usersTmp = JSON.parse(localStorage.userData);
+    usersTmp.users.push(newUser);
+    localStorage.userData = JSON.stringify(usersTmp);
+    document.signUpForm.userInfo.value = localStorage.userData;
+    var toPass = JSON.stringify(newUser);
+    if(sessionStorage.currentUser == null) {
+     sessionStorage.setItem("currentUser", toPass);
+    }
+    else {
+     sessionStorage.currentUser = toPass;
+    }
+    
+   }
+   else {
+    return false;
+   }
+  }//end of Validate
+  
+ </script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href=" "></a >
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Never</a ></li>
+        <li><a href="#">Hungry</a ></li>
+        <li><a href="#">Never</a ></li>
+        <li><a href="#">Lonely</a ></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="Login.jsp"><span class="glyphicon glyphicon-log-in"></span>  Login</a ></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left" style="text-align: center"> 
+      <div class="logo"></div>
+  <div id="signUp"><h1>SIGN UP</h1></div>
+  <div id="signUpForm">
+   <form method="POST" name="signUpForm" action="Premium_Homepage.jsp" onsubmit="return Validate();">
+   
+    <div id="left">
+    <strong>*Username:</strong> <br />
+     <input type="text" name="username" onchange="CheckUsername()" />
+     <span id="correctUsername"></span>
+     <div id="usernameError"><br /></div>
+    <strong> *Password:</strong><br />
+     <input type="password" name="password" onchange="CheckPassword()" />
+     <span id="correctPassword"></span>
+     <div id="passwordError"><br /></div>
+    <strong>*Re-enter Password:</strong><br />
+     <input type="password" name="reEnterPassword" onchange="CheckReEnter()" />
+     <span id="correctReEnter"></span>
+     <div id="reEnterPasswordError"><br /></div>
+    <strong>Image URL:</strong><br />
+     <input type="url" name="imageURL" placeholder="http://" />
+     <br />
+     <br />
+     </div>
+     <div id="right">
+    <strong>*E-mail:</strong><br />
+     <input type="email" name="email" />
+     <div id="emailError"></div>
+     <br />
+    <strong>*Phone number:</strong><br />
+     <input type="tel" name="telephone" />
+      <div id="telError"></div>
+      <br />
+    Date of Birth:<br />
+     <input type="date" name="bday">
+     <br />
+     <br />
+    Interested Cuisine:<br />
+       <input type="checkbox" id="am" name="american" value="american">American<br />
+     <input type="checkbox" id="as" name="asian" value="asian">Asian<br />
+     <input type="checkbox" id="fr" name="french" value="french">French<br />
+       <input type="checkbox" id="gr" name="greek" value="greek">Greek<br />
+       <input type="checkbox" id="me" name="mexican" value="mexican">Mexican<br />
+       
+      </div>
+      
+      <div id = "bottom">
+      <button type="submit" class="btn btn-success" style="width: 80px;">Submit</button>
+      <button type="reset" class="btn btn-info" style="width: 80px;">Reset</button> <br />
+      <input type="hidden" name="userInfo"><br />
+      <strong>*Required Fields</strong> 
+      </div>
+   </form>
+  </div><!-- end of SignUpForm -->
+    </div>
+    <div class="col-sm-2 sidenav">
+      
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>KawaEats@Inc.</p >
+</footer>
+
+</body>
+</html>

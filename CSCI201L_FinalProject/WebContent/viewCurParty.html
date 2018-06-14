@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Current_Party</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 600px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    a{
+    	text-decoration: none;
+    }
+    #url img{
+    	height: 50px;
+    	width: 50px;
+    	border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Never</a></li>
+        <li><a href="#">Lonely</a></li>
+        <li><a href="#">Never</a></li>
+        <li><a href="#">Hungry</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><div id="url"></div></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left" style="text-align: center"  > 
+      <div id = heading>
+		<h2>Current Parties for <span id=restaurant></span></h2>
+		</div>
+		
+		<div id=displayedParties></div>
+		
+		<form name="restForm" action="CreateParty.html" method="GET" onsubmit="ToCreate()">
+			<button type="submit" class="btn btn-success" name="createP">I don't like those parties!</button>
+		</form>
+    </div>
+    <div class="col-sm-2 sidenav">
+    </div>
+  </div>
+</div>
+<script language ="JavaScript">
+		function display(){
+			sessionStorage.setItem("displayUser", sessionStorage.currentUser);
+		}
+		var user = JSON.parse(sessionStorage.currentUser);
+		var url = user.imageURL;
+		document.getElementById("url").innerHTML += "<a href='Profile.jsp' onclick='return display()'><img src=" + url + "></a>";
+		
+		var sPageURL = window.location.search.substring(1);
+		var passByRestaurant = sPageURL.split('=');
+		var searchRestaurant =null;
+		if(passByRestaurant[1].includes('%20')){
+			var temp = passByRestaurant[1].split('%20');
+			searchRestaurant = temp[0]
+			for(var i=1; i< temp.length; i++){
+				searchRestaurant += " "+temp[i];
+			}
+		}
+		else{
+			searchRestaurant = passByRestaurant[1];
+		}
+		
+		
+		document.addEventListener("DOMContentLoaded", function(){
+		var partyList = null;
+		var parties = localStorage.getItem("partyData");
+		partyList = JSON.parse(parties);
+		localStorage.setItem("partyData",parties);
+		console.log(partyList);
+		console.log(parties);
+		
+		//add link to createParty page
+		document.restForm.createP.value = searchRestaurant;
+		// display restaurant name on the top of the page 
+		document.getElementById("restaurant").innerHTML = searchRestaurant;
+		var partiesCounter = 0;
+		document.getElementById("displayedParties").innerHTML = ""//"<div id=listStyle>";
+		for(var i=0; i<partyList.parties.length; i++){ // read corresponding parties from partyDataFile
+			if(partyList.parties[i].restaurant == searchRestaurant ){// && partyList.parties[i].status != "after"
+				partiesCounter ++;
+				document.getElementById("displayedParties").innerHTML += "<a href='PartyPage.html' onclick='toGordon(" + i + ");'>Party Name: "+partyList.parties[i].partyName+ "  "
+					+ "<br/>Host: " +partyList.parties[i].host
+					+ " (" + (partyList.parties[i].members.length+1) + "/"+ partyList.parties[i].capacity +") </a><br/>" ;
+				if((partyList.parties[i].members.length+1) < partyList.parties[i].capacity){ // if party has empty space 
+					console.log("Inside if");
+					document.getElementById("displayedParties").innerHTML +="<button class='btn btn-info' onclick='storeInfo("
+							+i+")'>Join Party</button><br /><br />";
+				}else{ // if party is full 
+					document.getElementById("displayedParties").innerHTML +="<font color ='red'><strong>Party is full!</strong></font color><br />";
+				}
+			}
+			
+		}//end of eventListener
+		document.getElementById("displayedParties").innerHTML += "<br/></br>";
+		
+		})
+		function ToCreate(){ // when user click create party button, pass restaurant in URL 
+			document.restForm.createP.value = searchRestaurant;
+		}
+		 
+		function storeInfo(partyIndex){	// store current user to right party; store party to current user 
+		 	//add party data into user
+		 	var us = JSON.parse(localStorage.userData);
+		 	var ui = -1;
+		 	for(var i=0; i<us.users.length; i++) {
+		 		console.log(i + ": " + us.users[i].username);
+		 		console.log(JSON.parse(sessionStorage.currentUser).username);
+		 		if(us.users[i].username == JSON.parse(sessionStorage.currentUser).username) {
+		 			ui = i;
+		 			break;
+		 		}
+		 	}
+		 	
+		 	var pd = JSON.parse(localStorage.partyData);
+		 	console.log(pd);
+		 	us.users[ui].parties.push(pd.parties[i].partyName);
+		 	localStorage.userData=JSON.stringify(us);
+		 	//add user data into party
+		 	var uname = JSON.parse(localStorage.currentUser).username;
+			pd.parties[i].members.push(uname);
+			//store into session for Gordon access
+		 	var toStore = pd.parties[i];
+			if(sessionStorage.currentParty == null) {
+				sessionStorage.setItem("currentParty", JSON.stringify(toStore));
+			}
+			else {
+				sessionStorage.currentParty = JSON.stringify(toStore);
+			}
+		} 
+		
+		//pi: partyIndex
+		function toGordon(pi) {
+			var pString = JSON.stringify(localStorage.partyData);
+			var p = JSON.parse(localStorage.partyData);
+			console.log(p);
+			var toPass = p.parties[pi];
+			if(sessionStorage.currentParty == null) {
+				sessionStorage.setItem("currentParty", JSON.stringify(toPass));
+			}
+			else {
+				sessionStorage.currentParty = JSON.stringify(toPass);
+			}
+			console.log(sessionStorage.currentParty);
+		}//end of toGordon(pi)
+	
+	</script>
+<footer class="container-fluid text-center">
+  <p>KawaEats@Inc.</p>
+</footer>
+
+</body>
+</html>

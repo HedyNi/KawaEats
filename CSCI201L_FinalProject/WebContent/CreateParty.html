@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Create_Party</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script language="JavaScript">
+			//load party data file to local storage
+			document.addEventListener("DOMContentLoaded", function() {
+				//retrieve restaurant name
+				//parse URL
+				//split URL - sPageURL: all chars after '?'
+				var sPageURL = window.location.search.substring(1);
+				if(sPageURL.length != 0) {
+					var sURLVariables = sPageURL.split('=');
+					//parse URL
+					var restaurantNameArray;
+					var restaurantName = "";
+					if(sURLVariables[1].includes('+')) {
+						console.log("here +");
+						restaurantNameArray = sURLVariables[1].split('+');
+						for(var i=0; i<restaurantNameArray.length; i++) {
+							if(i != 0) {
+								restaurantName += " ";
+							}
+							restaurantName += restaurantNameArray[i];
+						}
+					}
+					else if(sURLVariables[1].includes('%20')) {
+						console.log("here %20");
+						retaurantNameArray = sURLVariables[1].split('%20');
+						for(var i=0; i<restaurantNameArray.length; i++) {
+							if(i != 0) {
+								restaurantName += " ";
+							}
+							restaurantName += restaurantNameArray[i];
+						}
+					}
+					else {
+						restaurantName = sURLVariables[1];	
+					}
+					document.createParty.restaurant.value = restaurantName;
+				}
+				
+			})//end of event listener
+			
+			function CheckPartyName() {
+				var partiesString = localStorage.partyData;
+//				console.log("here");
+				console.log(partiesString);
+
+				var partiesData = JSON.parse(partiesString);
+				for(var i=0; i<partiesData.parties.length; i++) {
+					if(document.createParty.name.value == partiesData.parties[i].partyName) {
+						document.getElementById("partyNameError").innerHTML = "Sorry. Party name taken.";
+						return;
+					}
+				}
+				document.getElementById("partyNameError").innerHTML = "";
+			}//end of CheckPartyName()
+			
+			function CheckCapacity() {
+				if(document.createParty.capacity.value > 30 || document.createParty.capacity.value < 2) {
+					document.getElementById("capacityError").innerHTML = "Party size must be between 2 and 30.";
+				}
+				else {
+					document.getElementById("capacityError").innerHTML = "";
+				}
+			}//end of CheckCapacity()
+			
+			function CheckDate() {
+				var split = document.createParty.partyTime.value.split('T');
+				var date = split[0].split('-');
+				var time = split[1];
+				if((date[0]< 2018) || (date[0]==2018 && date[1]<6) || (date[0]==2018 && date[1]==6 && date[2]<11)) {
+					document.getElementById("dateError").innerHTML = "This date has already passed.";
+				}
+				else {
+					document.getElementById("dateError").innerHTML = "";
+				}
+			}//end of CheckDate
+			
+			function AddParty() {
+				var error = false;
+				if(document.createParty.restaurant.value.length == 0) {
+					document.getElementById("restaurantError").innerHTML = 
+						"Let people know which restaurant they are going to!";
+					error = true;
+				}
+				if(document.createParty.name.value.length == 0) {
+					document.getElementById("partyNameError").innerHTML =
+						"Give your party a name!";
+				}
+				if(document.createParty.info.value.length == 0) {
+					document.createParty.info.value.length = "";
+				}
+				if(error) {
+					return false;
+				}
+				var split = document.createParty.partyTime.value.split('T');
+				//create a new party object
+				var newParty = {
+					partyName: document.createParty.name.value,
+					host: JSON.parse(sessionStorage.currentUser).username,
+					restaurant: document.createParty.restaurant.value,
+					capacity: document.createParty.capacity.value,
+					info: document.createParty.info.value,
+					date: split[0],
+					time: split[1],
+					status: "before",
+					members: []
+				};
+				//set party object to sessionStorage 
+				var passToSession = JSON.stringify(newParty);
+				if(sessionStorage.displayParty == null) {
+					sessionStorage.setItem("displayParty", passToSession);
+				}
+				else {
+					sessionStorage.displayParty = passToSession;
+				}
+				//push and update localStorage: partyData
+				var data = JSON.parse(localStorage.partyData);
+				data.parties.push(newParty);
+				sessionStorage.setItem("currentParty", JSON.stringify(newParty));
+				console.log(localStorage.partyData);
+				localStorage.partyData = JSON.stringify(data);
+				return true;
+			}//end of AddParty()
+			
+		</script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 600px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    #url img{
+    	height: 50px;
+    	width: 50px;
+    	border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Never</a></li>
+        <li><a href="#">Lonely</a></li>
+        <li><a href="#">Never</a></li>
+        <li><a href="#">Hungry</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><div id="url"></div></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left" style="text-align: center"> 
+      <div id="pageTitle">
+		<h2>Create Your Own Party!</h2>
+		</div>
+		<form method="GET" name="createParty" action="PartyPage.html" onsubmit="return AddParty();">
+			Restaurant <br />
+				<input type="text" name="restaurant" />
+				<div id="restaurantError"></div>
+				<br />
+			Party Name <br />
+				<input type="text" name="name" onchange="CheckPartyName()"/>
+				<div id="partyNameError"></div>
+				<br />
+			Number of Members <br />
+				<input type="number" name="capacity" min="2" max="30" onchange="CheckCapacity()"/>
+				<div id="capacityError"></div>
+				<br />
+			Date and Time <br />
+				<input type="datetime-local" name="partyTime" onchange="CheckDate()"/>
+				<div id="dateError"></div>
+				<br />
+			Info <br />
+				<textarea name="info" placeholder="Let people know more about your party!"></textarea>
+				<br />
+			<button type="submit" class="btn btn-success">Submit</button>
+			<button type="reset" class="btn btn-info">Reset</button>
+		</form>
+    </div>
+    <div class="col-sm-2 sidenav">
+    </div>
+  </div>
+</div>
+
+
+<script>
+	function display(){
+		sessionStorage.setItem("displayUser", sessionStorage.currentUser);
+	}
+	var user = JSON.parse(sessionStorage.currentUser);
+	var url = user.imageURL;
+	document.getElementById("url").innerHTML += "<a href='Profile.jsp' onclick='return display()'><img src=" + url + "></a>";
+</script>
+<footer class="container-fluid text-center">
+  <p>KawaEats@Inc.</p>
+</footer>
+
+</body>
+</html>

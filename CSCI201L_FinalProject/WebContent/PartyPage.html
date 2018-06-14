@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Party_Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+     #url img{
+    	height: 50px;
+    	width: 50px;
+    }
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+	    #follow_button{
+		background-color: grey;
+		color: white;
+		border: 2px solid #555555;
+		width: 100px;
+		height: 50px;
+		float: right;
+		}
+		#location{
+			background-color: yellow;
+		}
+		#follow_button{
+		 background-color: #5cb85c;
+		 color: white;
+		 /* border: 2px solid #555555; */
+		 border-radius: 5px;
+		 width: 100px;
+		 height: 50px;
+		 float: right;
+		 }
+		 #location{
+		  background-color:#7FDBFF;
+		  border-radius: 5px;
+		  height: 30px;
+		  color: white;
+		  text-align: center;
+		 }
+		 #time{
+		  background-color:#7FDBFF;
+		  border-radius: 5px;
+		  height: 30px;
+		  color: white;
+		  text-align: center;
+		 }#number{
+		  background-color:#7FDBFF;
+		  border-radius: 5px;
+		  height: 30px;
+		  color: white;
+		  text-align: center;
+		 }
+		 .box img{
+		 	border: 1px solid black;
+		 	border-radius: 50%;
+		 	height: 150px;
+		 	width: 150px;
+		 }
+		 .box{
+		 	float: left;
+		 	text-align: center;
+		 	height: 200px;
+		 	width: 200px;
+		 }
+		 #url img{
+	    	height: 50px;
+	    	width: 50px;
+	    	border-radius: 50%;
+	    }
+	    #crown img{
+	    	height: 50px;
+	    	width: 50px;
+	    	left: 90px;
+	    	top: 110px;
+	    	position: absolute;
+	    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Never</a></li>
+        <li><a href="#">Lonely</a></li>
+        <li><a href="#">Never</a></li>
+        <li><a href="#">Hungry</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+       <li><div id="url"></div></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <br /><br />
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="#section1" style = "text-align: center; background-color:#5cb85c">Party Info</a></li>
+        <li><div id="location">Location: </div></li>
+        <li><div id="time">Time: </div></li>
+        <li><div id="number">Current Number: </div></li>
+      </ul><br>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search Restaurant..">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+    
+      <h2>Member Info.</h2>
+      <button id = "follow_button" onclick="myFunction()"></button> 
+      <h5 id = "hoster"><span class="glyphicon glyphicon-time"></span> Host by: </h5>
+      <h5><span class="label label-success">Active</span></h5><br>
+      
+      <div id = "members">
+      	<div id="crown"></div>
+      	<div id="hostBox" class="box"></div>
+      	<div id="box0" class="box"></div>
+      	<div id="box1" class="box"></div>
+      	<div id="box2" class="box"></div>
+      	<div id="box3" class="box"></div>
+      	<div id="box4" class="box"></div>
+      	<div class="clear" style="clear:both">
+      </div>
+      <hr>
+
+      <h4>Leave a Message:</h4>
+      <form role="form">
+        <div class="form-group">
+          <textarea class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+      <br><br>
+    
+    </div>
+  </div>
+</div>
+</div>
+
+<footer class="container-fluid">
+  <p style="text-align: center">KawaEats@Inc.</p>
+</footer>
+</body>
+<script>
+	var url = JSON.parse(sessionStorage.getItem("currentUser")).imageURL;
+	document.getElementById("url").innerHTML += "<a href='Profile.jsp' onclick='return display()'><img src=" + url + "></a>";
+	var abc = JSON.parse(localStorage.getItem("partyData"));
+	var buffer = sessionStorage.getItem("currentParty");
+	var passIn = JSON.parse(buffer);
+	var local = JSON.parse(localStorage.getItem("userData"));
+	for(var i=0; i <abc.parties.length;i++){
+		if(abc.parties[i].partyName == passIn.partyName){
+			passIn = abc.parties[i];
+			break;
+		}
+	}
+	console.log(buffer);
+	console.log(passIn);
+	document.getElementById("location").innerHTML += passIn.restaurant;
+	document.getElementById("time").innerHTML += passIn.time;
+	document.getElementById("number").innerHTML += passIn.members.length + 1;
+	document.getElementById("hoster").innerHTML += "<span style='font-weight:bold'>" + passIn.host + "</span>";
+	for(var i=0;i<local.users.length;i++){
+		if(passIn.host == local.users[i].username){
+			document.getElementById("crown").innerHTML += "<img src= 'https://cdn2.iconfinder.com/data/icons/bitsies/128/Crown-128.png'><br/>";
+			document.getElementById("hostBox").innerHTML += "<img src=" + local.users[i].imageURL + "><br/>";
+			document.getElementById("hostBox").innerHTML += "Host: " + passIn.host + "<br/>";
+			break;
+		}
+	}
+	for(var m = 0; m < passIn.members.length; m++){
+		for(var j=0;j<local.users.length; j++){
+			console.log(local.users[j].username)
+			if(passIn.members[m] == local.users[j].username){
+				
+				document.getElementById("box"+m).innerHTML += "<img src=" + local.users[j].imageURL + "><br/>";
+				break;
+			}
+		}
+		document.getElementById("box"+m).innerHTML += "Member: " +passIn.members[m] + "<br/>";
+	}
+	function display(){
+		sessionStorage.setItem("displayUser", sessionStorage.currentUser);
+	}
+</script>
+
+<script>
+	
+	/*Retrieve information about current user*/
+	var search_people_image = sessionStorage.getItem("search_people_image");
+	var search_people_name = sessionStorage.getItem("search_people_name");
+	/* document.getElementById("user_img").innerHTML += "<img src=" + search_people_image + "></br>";
+	document.getElementById("user_name").innerHTML += "@" + search_people_name + "</br>"; */
+	
+	var favorite_length = sessionStorage.getItem("search_people_favorite_length");
+	var currentUserName = JSON.parse(sessionStorage.getItem("currentUser")).username;
+
+	var isHost = false;
+	if(passIn.host == currentUserName){
+		isHost = true;
+	}
+	
+	var inParty = false;
+	var isFinalized = false;
+	if(passIn.capacity == passIn.members.length + 1){
+		isFinalized = true;
+	}
+	
+	
+	/* to comprares the current user name and the list of users in this party */
+	for(var t = 0; t < passIn.members.length; t++){
+		if(passIn.members[t] == currentUserName){
+			inParty = true;
+		}
+	}
+	
+	if(isFinalized == true){
+		document.getElementById("follow_button").innerHTML += "Party is finalized";
+	}
+	else if(inParty == true && isHost == false){
+		document.getElementById("follow_button").innerHTML += "Leave Party";
+	}
+	else if(inParty == false && isHost == false){
+		console.log("I am Here: " + currentUserName);
+		document.getElementById("follow_button").innerHTML += "Join Party";
+	}
+	else if(isHost == true){
+		document.getElementById("follow_button").innerHTML += "Finalized Party";
+	}
+	
+	function myFunction() {
+		
+		/*Now passIn.parties[0] is the party needs to be modified.*/
+		
+		if(inParty == false && isHost == false && isFinalized == false){
+			passIn.members.push(currentUserName);
+			for(var p=0;p < 5; p++){
+				document.getElementById("box"+p).innerHTML = "";
+			}
+			document.getElementById("number").innerHTML = "Current Number: ";
+			document.getElementById("number").innerHTML += passIn.members.length + 1;
+			document.getElementById("follow_button").innerHTML = "";
+			document.getElementById("follow_button").innerHTML += "Leave Party";
+			for(var m = 0; m < passIn.members.length; m++){;
+				var local = JSON.parse(localStorage.getItem("userData"));
+				for(var j=0;j<local.users.length; j++){
+					console.log(local.users[j].username)
+					if(passIn.members[m] == local.users[j].username){
+						
+						document.getElementById("box"+m).innerHTML += "<img src=" + local.users[j].imageURL + "><br/>";
+						break;
+					}
+				}
+				document.getElementById("box"+m).innerHTML += "Member: " +passIn.members[m] + "<br/>"
+			}
+			window.alert("Join Done.");
+			document.getElementById("follow_button").innerHTML = "Leave Party";
+			inParty = true;
+			var hohei = JSON.parse(localStorage.getItem("partyData"));
+			for(var j=0;j<hohei.parties.length;j++){
+				if(hohei.parties[j].partyName == passIn.partyName){
+					hohei.parties[j] = passIn;
+					break;
+				}
+			}
+			localStorage.setItem("partyData", JSON.stringify(hohei));
+			sessionStorage.setItem("currentParty", JSON.stringify(passIn));
+			return;
+		}
+		else if(inParty == true && isHost == false && isFinalized == false){
+					for(var p=0;p < 5; p++){
+						document.getElementById("box"+p).innerHTML = "";
+					}
+					document.getElementById("follow_button").innerHTML = "";
+					document.getElementById("follow_button").innerHTML += "Leave Party";
+					for(var p = 0; p < passIn.members.length; p++){
+						if(passIn.members[p] == currentUserName){
+							passIn.members.splice(p,1);
+							for(var m = 0; m < passIn.members.length; m++){
+								var local = JSON.parse(localStorage.getItem("userData"));
+								document.getElementById("number").innerHTML = "Current Number: ";
+								document.getElementById("number").innerHTML += passIn.members.length + 1;
+								for(var j=0;j<local.users.length; j++){
+									console.log(local.users[j].username)
+									if(passIn.members[m] == local.users[j].username){
+										document.getElementById("box"+m).innerHTML += "<img src=" + local.users[j].imageURL + "><br/>";
+										break;
+									}
+								}
+								document.getElementById("box"+m).innerHTML += "Member: " +passIn.members[m] + "<br/>";
+							}
+							/* sessionStorage.setItem("search_people_followers_length", passIn.users[j].followers.length); */
+							window.alert("Leave Done.");
+							document.getElementById("follow_button").innerHTML = "Join Party";
+							inParty = false;
+							var hohei = JSON.parse(localStorage.getItem("partyData"));
+							for(var j=0;j<hohei.parties.length;j++){
+								if(hohei.parties[j].partyName == passIn.partyName){
+									hohei.parties[j] = passIn;
+									break;
+								}
+							}
+							localStorage.setItem("partyData", JSON.stringify(hohei));
+							sessionStorage.setItem("currentParty", JSON.stringify(passIn));
+							return;
+						}
+					}
+				
+			
+			
+		}
+		else if(isHost == true && isFinalized == false){
+			   passIn.capacity = passIn.members.length+1;
+			   var hohei = JSON.parse(localStorage.getItem("partyData"));
+			   for(var j=0;j<hohei.parties.length;j++){
+					if(hohei.parties[j].partyName == passIn.partyName){
+						hohei.parties[j] = passIn;
+						break;
+					}
+				}
+				localStorage.setItem("partyData", JSON.stringify(hohei));
+				sessionStorage.setItem("currentParty", JSON.stringify(passIn));
+			   if (window.confirm('Really go to another page?')){
+			       alert('Party has been finalized');
+			       window.location = 'Homepage.jsp';
+			   }
+			   else{
+			       die();
+			   }
+		}		
+		/* localStorage.setItem("JsonString", JSON.stringify(passIn)); */
+	}
+	
+
+</script>
+
+</html>

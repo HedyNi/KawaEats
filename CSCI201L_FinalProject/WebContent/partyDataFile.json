@@ -1,0 +1,69 @@
+{
+	"parties": [{
+		"partyName": "partyno1",
+		"host": "ttrojan",
+		"restaurant": "Dulce",
+		"capacity": "3",
+		"info": "A new popular cafe shop at village!",
+		"date": "11062018",
+		"time": "1100",
+		"status": "after",
+		"members": [
+			"emily"
+		]
+	},
+	{
+		"partyName": "latenightstudy",
+		"host": "ttrojan",
+		"restaurant": "Dulce",
+		"capacity": "2",
+		"info": "Come and join!",
+		"date": "11062018",
+		"time": "1800",
+		"status": "before",
+		"members": [
+			"ethan",
+			"daniel"
+		]
+	},
+	{
+		"partyName": "Forlunch",
+		"host": "emily",
+		"restaurant": "Dirt Dog",
+		"capacity": "4",
+		"info": "Let's go to dirt dog!",
+		"date": "11062018",
+		"time": "1400",
+		"status": "before",
+		"members": [
+			
+		]
+	},
+	{
+		"partyName": "EarlyDinner",
+		"host": "daniel",
+		"restaurant": "Dirt Dog",
+		"capacity": "4",
+		"info": "3109233147",
+		"date": "11062018",
+		"time": "1700",
+		"status": "before",
+		"members": [
+			"jmiller"
+		]
+	},
+	{
+		"partyName": "Oncampus",
+		"host": "emily",
+		"restaurant": "Lemonade",
+		"capacity": "5",
+		"info": "On campus early dinner!",
+		"date": "11062018",
+		"time": "1630",
+		"status": "after",
+		"members": [
+			"ethan"
+		]
+	}
+	]
+}

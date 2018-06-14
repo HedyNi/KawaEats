@@ -1,0 +1,103 @@
+{
+	"users": [{
+		"data": "2016-06-04",
+		"username": "ttrojan",
+		"password": "fighton",
+		"imageURL": "http://grfx.cstv.com/photos/schools/usc/sports/genrel/auto_player/11869977.jpeg",
+		"phone": "12343243",
+		"email": "fighton@usc.edu",
+		"friends": [
+			"jmiller",
+			"emily"
+		],
+		"interested" :[
+			"greek"
+		],
+		"parties": [
+			"jmiller"
+		],
+		"messages": [
+			"Fight on@jmiller"
+		]
+	},
+	{
+		"username": "jmiller",
+		"password": "201prof",
+		"imageURL": "http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg",
+		"phone": "87654321",
+		"email": "jmiller@usc.edu",
+		"interested" :[
+			"greek"
+		],
+		"friends": [
+			"ttrojan"
+		],
+		"parties": [
+			"ttrojan",
+			"emily",
+			"daniel"
+		],
+		"messages": [
+			"GG@daniel"
+		]
+	},
+	{
+		"username": "emily",
+		"password": "hafaadai",
+		"imageURL": "http://www-scf.usc.edu/~csci201/images/emily_jin.jpg",
+		"phone": "43253459",
+		"email": "emily@usc.edu",
+		"interested" :[
+			"greek"
+		],
+		"friends": [
+			"jmiller",
+			"daniel",
+			"ethan"
+		],
+		"parties": [
+			"ttrojan"
+		],
+		"messages": [
+		]
+	},
+	{
+		"username": "daniel",
+		"password": "shrekislove",
+		"imageURL": "http://www-scf.usc.edu/~csci201/images/daniel_mizrahi.jpg",
+		"phone": "94395254",
+		"email": "daniel@usc.edu",
+		"interested" :[
+			"greek"
+		],
+		"friends": [
+			"jmiller",
+			"ethan"
+		],
+		"parties": [
+			"emily"
+		],
+		"messages": [
+		]
+	},
+	{
+		"username": "ethan",
+		"password": "shrekislife",
+		"imageURL": "http://www-scf.usc.edu/~csci201/images/ethan_xiong.jpg",
+		"phone": "23958922",
+		"email": "ethan@usc.edu",
+		"interested" :[
+			"greek"
+		],
+		"friends": [
+			"emily"
+		],
+		"parties": [
+			"daniel",
+			"emily"
+		],
+		"messages": [
+		]
+	}
+	]
+}
