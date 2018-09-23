@@ -13,5 +13,7 @@ Preimum functions for login-in user
 Implemented web sockets for real time chat  
 
 ## User Interface
+![Screenshot](Intro.png)
 ![Screenshot](signup.png)
 ![Screenshot](prem_homepage.png)
+![Screenshot](profile.png)
