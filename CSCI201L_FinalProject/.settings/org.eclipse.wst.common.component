@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="CSCI201L_FinalProject">
+    <wb-module deploy-name="KawaEats">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="CSCI201L_FinalProject"/>
-        <property name="java-output-path" value="/CSCI201L_FinalProject/build/classes"/>
+        <property name="java-output-path" value="/KawaEats/build/classes"/>
+        <property name="context-root" value="KawaEats"/>
     </wb-module>
 </project-modules>
