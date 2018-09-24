@@ -2,8 +2,8 @@
 A web application for foodies
 
 ## Skills
-Front end: HTML, CSS, Bootstrap  
-Backend: Java, Javascript, MySQL  
+Front end: HTML, CSS, Javascript, Bootstrap  
+Backend: Java, MySQL  
 IDE: Eclipse  
 
 
